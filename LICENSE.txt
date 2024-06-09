@@ -1,0 +1,49 @@
+Custom Software License Agreement
+
+This Software License Agreement (the "Agreement") is entered into by and between Preston Dragon 989 ("Licensor") and 
+the user ("Licensee"). By using the software ("Software"), Licensee agrees to be bound by the terms of this Agreement.
+
+1. **License Grant** Licensor grants Licensee a non-exclusive, non-transferable, revocable license to use the 
+Software solely for personal or internal business purposes, subject to the restrictions set forth in this Agreement.
+
+2. **Restrictions** a. Licensee shall not, and shall not permit any third party to: i. View, access, examine, 
+or inspect the source code of the Software. ii. Reverse engineer, decompile, disassemble, or attempt to derive the 
+source code or underlying ideas or algorithms of the Software. iii. Modify, adapt, translate, or create derivative 
+works of the Software. iv. Rent, lease, loan, sell, distribute, sublicense, or otherwise transfer the Software or any 
+copies thereof. v. Use the Software for any purpose that is illegal or prohibited by this Agreement.
+
+3. **Proprietary Rights** The Software and all worldwide copyrights, trade secrets, and other intellectual property 
+rights therein are the exclusive property of Licensor. Licensee shall not remove, alter, or obscure any proprietary 
+notices on the Software.
+
+4. **Disclaimer of Warranties** THE SOFTWARE IS PROVIDED "AS IS," WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, 
+INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE, TITLE, 
+AND NON-INFRINGEMENT. LICENSOR MAKES NO WARRANTY THAT THE SOFTWARE WILL BE ERROR-FREE OR THAT ACCESS THERETO WILL BE 
+UNINTERRUPTED.
+
+5. **Limitation of Liability** IN NO EVENT SHALL LICENSOR BE LIABLE WITH RESPECT TO THE SOFTWARE FOR ANY INDIRECT, 
+INCIDENTAL, CONSEQUENTIAL, SPECIAL, OR EXEMPLARY DAMAGES, INCLUDING WITHOUT LIMITATION, DAMAGES FOR LOSS OF PROFITS, 
+GOODWILL, USE, DATA, OR OTHER INTANGIBLE LOSSES (EVEN IF LICENSOR HAS BEEN ADVISED OF THE POSSIBILITY OF SUCH 
+DAMAGES). IN NO EVENT SHALL LICENSOR'S CUMULATIVE LIABILITY UNDER THIS AGREEMENT EXCEED THE AMOUNT PAID BY LICENSEE 
+TO LICENSOR FOR THE SOFTWARE.
+
+6. **Indemnification** Licensee agrees to indemnify, defend, and hold harmless Licensor from and against any and all 
+claims, liabilities, damages, losses, or expenses (including reasonable attorneys' fees and costs) arising out of or 
+in any way connected with Licensee's use of the Software.
+
+7. **Termination** Licensor may terminate this Agreement at any time if Licensee breaches any term of this Agreement. 
+Upon termination, Licensee shall immediately cease all use of the Software and destroy all copies, full or partial, 
+of the Software.
+
+8. **General** a. This Agreement constitutes the entire agreement between the parties concerning the subject matter 
+hereof and supersedes all prior agreements and understandings with respect to that subject matter. b. This Agreement 
+may only be modified by a written document signed by both parties. c. If any provision of this Agreement is found to 
+be unenforceable or invalid, that provision will be limited or eliminated to the minimum extent necessary so that 
+this Agreement will otherwise remain in full force and effect and enforceable. d. This Agreement is governed by and 
+construed in accordance with the laws of [Your Jurisdiction], without regard to its conflict of laws provisions.
+
+By using the Software, Licensee acknowledges that they have read, understood, and agree to be bound by the terms and 
+conditions of this Agreement.
+
+Preston Dragon 989
+5-26-2024
