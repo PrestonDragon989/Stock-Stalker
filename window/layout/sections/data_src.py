@@ -9,10 +9,10 @@ class DataSrcSection(Section):
     def __init__(self, root, root_window):
         super().__init__(root, root_window, root_window.main_bg, root_window.fg)
 
-        self.paragraph_text = """The data collected on all of the stocks seen is from Alpha Vantage.
+        self.paragraph_text = f"""The data collected on all of the stocks seen is from Yahoo! Finance.
 What this means, is that any data gotten is reliant on them, and inaccuracies can occur at their hand. 
 This makes it somewhat unreliable, however it also free, hence the choice.
-Any mistakes made at the hand of false data cannot be blamed on the creator of STALKER. 
+Any mistakes made at the hand of false data cannot be blamed on the creator of {self.root_window.launcher.name}. 
 
 
 All collections are ran through them, and any data about the stalks or crypto currencies can be found through them.
@@ -25,7 +25,7 @@ To visit the site, press the button below."""
 
     def activate(self):
         def visit_site():
-            web.open("https://www.alphavantage.co/")
+            web.open("https://finance.yahoo.com/most-active/")
 
         title = tk.Label(self.frame, text="Stock Data Source", font=("Montserrat", 32, "bold"))
         title.config(bg=self.bg, fg=self.fg)

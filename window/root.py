@@ -22,6 +22,8 @@ class RootWindow:
 
         self.fg = uc.rgb_to_hex(245, 250, 250)
 
+        print(f"FG={self.fg}\nBG={self.main_bg}\nBG2={self.second_bg}\nBG3={self.third_bg}")
+
         self.popup = up.Popup(self.root, self)
 
         # Layout Objects
@@ -32,11 +34,12 @@ class RootWindow:
         self.section = None
 
     def init_root_data(self):
-        self.root.title("STALKER")
+        self.root.title(f"{self.launcher.name}")
         self.root.resizable(False, False)
         self.root.geometry(f"{self.size[0]}x{self.size[1]}")
         self.root.maxsize(*self.size)
         self.root.config(bg=self.main_bg)
+        self.root.iconbitmap('favicon.ico')
 
     def layout(self):
         self.taskbar.clear()

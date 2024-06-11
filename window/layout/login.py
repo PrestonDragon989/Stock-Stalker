@@ -148,7 +148,7 @@ class LoginScreen:
 
         self.frame.config(bg=self.bg)
 
-        title = tk.Label(self.frame, text="Login to STALKER")
+        title = tk.Label(self.frame, text=f"Login to {self.launcher.name}")
         title.config(bg=self.bg, fg=self.fg, font=("Montserrat", 32, "bold"))
         title.pack(pady=19)
 

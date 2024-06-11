@@ -1,4 +1,4 @@
-""" Database starter class file. """
+""" Database starter class file. This file holds all the database code, and is the source of all other db data. """
 import threading
 
 import sys
@@ -10,9 +10,11 @@ from tkinter import messagebox
 
 class DatabaseStarter:
     """ An independent thread starter for the database, for seamless GUI opening. """
-    def __init__(self) -> None:
+    def __init__(self, name) -> None:
         """ Constructor for DBS, contains private variable db. """
         self._database = None
+
+        self._name = name
 
     def database(self) -> object:
         """ Returns private variable db. """
@@ -26,7 +28,7 @@ class DatabaseStarter:
             self._database = db
         except (pymongo.errors.ConfigurationError, TypeError):
             messagebox.showinfo("Connection Error",
-                                "STALKER could not connect. Make sure you have internet, and try again later.")
+                                f"{self._name} could not connect. Make sure you have internet, and try again later.")
             sys.exit()
 
     def start(self) -> None:

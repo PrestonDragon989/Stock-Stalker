@@ -8,7 +8,7 @@ class Popup:
 
     def activate(self, text, fontsize=15):
         popup = tk.Toplevel(self.root)
-        popup.title("STALKER Alert")
+        popup.title(f"{self.root_window.launcher.name} Alert")
         popup.resizable(False, False)
         popup.geometry("300x200")
         popup.config(bg=self.root_window.main_bg)
@@ -22,5 +22,7 @@ class Popup:
                      font=("Montserrat", 17, "bold"), activebackground="#f0f",
                      activeforeground=self.root_window.fg, highlightcolor=self.root_window.third_bg)
         close.pack(side=tk.BOTTOM, pady=10)
+        close.bind("<Enter>", lambda x: close.config(bg=self.root_window.third_bg))
+        close.bind("<Leave>", lambda x: close.config(bg=self.root_window.second_bg))
 
         popup.mainloop()
