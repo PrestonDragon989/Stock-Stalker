@@ -40,7 +40,7 @@ To visit the site, press the button below."""
         yfinance_page = tk.Button(self.frame, text="Visit Site", font=("Montserrat", 32, "bold"), command=visit_site,
                                   width=20)
         yfinance_page.config(width=20, bg=self.root_window.second_bg, fg=self.root_window.fg,
-                             font=("Montserrat", 32, "bold"), activebackground="#f0f",
+                             font=("Montserrat", 32, "bold"), activebackground=self.root_window.ag,
                              activeforeground=self.root_window.fg, highlightcolor=self.root_window.third_bg)
         yfinance_page.bind("<Enter>", lambda event: yfinance_page.config(bg=self.root_window.third_bg))
         yfinance_page.bind("<Leave>", lambda event: yfinance_page.config(bg=self.root_window.second_bg))

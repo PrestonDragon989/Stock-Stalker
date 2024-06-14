@@ -21,8 +21,7 @@ class RootWindow:
         self.third_bg = uc.rgb_to_hex(76, 115, 113)
 
         self.fg = uc.rgb_to_hex(245, 250, 250)
-
-        print(f"FG={self.fg}\nBG={self.main_bg}\nBG2={self.second_bg}\nBG3={self.third_bg}")
+        self.ag = uc.rgb_to_hex(255, 0, 255)
 
         self.popup = up.Popup(self.root, self)
 

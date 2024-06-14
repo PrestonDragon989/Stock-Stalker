@@ -7,6 +7,8 @@ from window.root import RootWindow
 
 class Launcher:
     def __init__(self):
+        self.version = "1.0.0"
+
         self.name = "STALKER"
 
         print(f"Welcome to {self.name}! Sorry that you have to use the seen console edition, but it can't be helped.")

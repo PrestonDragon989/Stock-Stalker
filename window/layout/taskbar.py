@@ -20,21 +20,26 @@ class Taskbar:
         self.frame.config(bg=self.bg, borderwidth=1, relief=tk.SOLID)
 
         self.items = [
-            ti.TaskbarItem(self.root_window.second_bg, self.root_window.third_bg, self.root_window.fg, "Stock Searcher",
+            ti.TaskbarItem(self.root_window.second_bg, self.root_window.third_bg, self.root_window.fg,
+                           self.root_window.ag, "Stock Searcher",
                            StockSearcher(self.root, self.root_window), self.width, self.root_window.set_section),
 
-            ti.TaskbarItem(self.root_window.second_bg, self.root_window.third_bg, self.root_window.fg, "Stock Keeper",
+            ti.TaskbarItem(self.root_window.second_bg, self.root_window.third_bg, self.root_window.fg,
+                           self.root_window.ag, "Stock Keeper",
                            sect.Section(self.root, self.root_window, self.root_window.main_bg,
                                         self.root_window.main_bg), self.width, self.root_window.set_section),
 
-            ti.TaskbarItem(self.root_window.second_bg, self.root_window.third_bg, self.root_window.fg, "Data Src",
+            ti.TaskbarItem(self.root_window.second_bg, self.root_window.third_bg, self.root_window.fg,
+                           self.root_window.ag, "Data Src",
                            DataSrc(self.root, self.root_window), self.width, self.root_window.set_section),
         ]
 
         self.bottom_options = [
-            ti.TaskbarItem(self.root_window.second_bg, self.root_window.third_bg, self.root_window.fg, "Exit",
+            ti.TaskbarItem(self.root_window.second_bg, self.root_window.third_bg, self.root_window.fg,
+                           self.root_window.ag, "Exit",
                            None, self.width, self.root_window.exit, modified=True),
-            ti.TaskbarItem(self.root_window.second_bg, self.root_window.third_bg, self.root_window.fg, "Log out",
+            ti.TaskbarItem(self.root_window.second_bg, self.root_window.third_bg, self.root_window.fg,
+                           self.root_window.ag, "Log out",
                            None, self.width, self.root_window.login_screen.activate, modified=True)
         ]
 
@@ -75,7 +80,7 @@ class Taskbar:
         if clearance == 3:
             added_items[1].append(
                 ti.TaskbarItem(self.root_window.second_bg, self.root_window.third_bg, self.root_window.fg,
-                               "Admin Panel", AdminPanel(self.root, self.root_window),
+                               self.root_window.ag,"Admin Panel", AdminPanel(self.root, self.root_window),
                                self.width, self.root_window.set_section))
 
         return added_items

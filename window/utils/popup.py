@@ -19,7 +19,7 @@ class Popup:
 
         close = tk.Button(popup, text="Close", command=popup.destroy)
         close.config(bg=self.root_window.second_bg, fg=self.root_window.fg,
-                     font=("Montserrat", 17, "bold"), activebackground="#f0f",
+                     font=("Montserrat", 17, "bold"), activebackground=self.root_window.ag,
                      activeforeground=self.root_window.fg, highlightcolor=self.root_window.third_bg)
         close.pack(side=tk.BOTTOM, pady=10)
         close.bind("<Enter>", lambda x: close.config(bg=self.root_window.third_bg))

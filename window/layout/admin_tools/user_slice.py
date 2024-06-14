@@ -22,6 +22,7 @@ class UserSlice:
         self.s_bg = self.root_window.second_bg
         self.t_bg = self.root_window.third_bg
         self.fg = self.root_window.fg
+        self.ag = self.root_window.ag
 
     def get_name(self) -> str:
         name = self.user["name"] + " | " + self.user["preferred_name"]
@@ -56,7 +57,7 @@ class UserSlice:
         delete_account_button = tk.Button(content_frame, text="Delete User",
                                           command=self.attempt_delete)
         delete_account_button.config(bg=self.bg, fg=self.fg,
-                                     font=("Montserrat", 14, "bold"), activebackground="#f0f",
+                                     font=("Montserrat", 14, "bold"), activebackground=self.ag,
                                      activeforeground=self.fg, highlightcolor=self.bg)
         delete_account_button.pack(pady=5, side=tk.RIGHT, anchor=tk.NE, padx=5)
         delete_account_button.bind("<Enter>", lambda event: delete_account_button.config(bg="#e31464"))
@@ -86,7 +87,7 @@ class UserSlice:
 
         manage_button = tk.Button(self.frame, text="Manage", command=self.manage_user)
         manage_button.config(bg=self.bg, fg=self.fg,
-                             font=("Montserrat", 13), activebackground="#f0f",
+                             font=("Montserrat", 13), activebackground=self.ag,
                              activeforeground=self.fg, highlightcolor=self.bg)
         manage_button.pack(pady=2, side=tk.RIGHT, padx=4)
         manage_button.bind("<Enter>", lambda event: manage_button.config(bg=self.t_bg))

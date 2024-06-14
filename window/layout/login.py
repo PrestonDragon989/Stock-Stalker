@@ -17,6 +17,7 @@ class LoginScreen:
         self.s_bg = self.root_window.second_bg
         self.t_bg = self.root_window.third_bg
         self.fg = self.root_window.fg
+        self.ag = self.root_window.ag
 
         self.width = self.root_window.size[0]
         self.height = self.root_window.size[1]
@@ -52,7 +53,7 @@ class LoginScreen:
         login_button = tk.Button(login_frame, text="Login",
                                  command=lambda: attempt_login(name_box.get(), password_box.get()))
         login_button.config(width=17, bg=self.t_bg, fg=self.fg,
-                            font=("Montserrat", 24, "bold"), activebackground="#f0f",
+                            font=("Montserrat", 24, "bold"), activebackground=self.root_window.ag,
                             activeforeground=self.fg, highlightcolor=self.t_bg)
         login_button.bind("<Enter>", lambda event: login_button.config(bg=self.bg))
         login_button.bind("<Leave>", lambda event: login_button.config(bg=self.t_bg))
@@ -121,7 +122,7 @@ class LoginScreen:
                                                              entries[2][1].get().strip(),
                                                              reason_text.get("1.0", tk.END).strip()))
         send_button.config(width=17, bg=self.t_bg, fg=self.fg,
-                           font=("Montserrat", 24, "bold"), activebackground="#f0f",
+                           font=("Montserrat", 24, "bold"), activebackground=self.ag,
                            activeforeground=self.fg, highlightcolor=self.t_bg)
         send_button.bind("<Enter>", lambda event: send_button.config(bg=self.bg))
         send_button.bind("<Leave>", lambda event: send_button.config(bg=self.t_bg))
@@ -151,6 +152,10 @@ class LoginScreen:
         title = tk.Label(self.frame, text=f"Login to {self.launcher.name}")
         title.config(bg=self.bg, fg=self.fg, font=("Montserrat", 32, "bold"))
         title.pack(pady=19)
+
+        version = tk.Label(self.frame, text=f"Version {self.root_window.launcher.version}", font=("Montserrat", 10))
+        version.config(fg=self.fg, bg=self.bg)
+        version.place(x=3, y=3, height=20, width=80)
 
         self.activate_login(attempt_login)
 

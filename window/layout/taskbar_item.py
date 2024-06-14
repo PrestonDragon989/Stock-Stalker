@@ -2,10 +2,11 @@ import tkinter as tk
 
 
 class TaskbarItem:
-    def __init__(self, main_bg, second_bg, fg, text, section, width_cap, section_setter, modified=False):
+    def __init__(self, main_bg, second_bg, fg, ag, text, section, width_cap, section_setter, modified=False):
         self.main_bg = main_bg
         self.second_bg = second_bg
         self.fg = fg
+        self.ag = ag
 
         self.text = text
         self.section = section
@@ -31,14 +32,14 @@ class TaskbarItem:
 
     def click(self, *args):
         if not self.modified:
-            self.frame.config(bg="#f0f")
+            self.frame.config(bg=self.ag)
             for child in self.frame.winfo_children():
-                child.config(bg="#f0f")
+                child.config(bg=self.ag)
             self.section_setter(self.section)
         if self.modified:
-            self.frame.config(bg="#f0f")
+            self.frame.config(bg=self.ag)
             for child in self.frame.winfo_children():
-                child.config(bg="#f0f")
+                child.config(bg=self.ag)
             self.section_setter()
 
     def config_frame(self, frame, y):

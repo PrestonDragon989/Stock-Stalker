@@ -11,6 +11,7 @@ class RequestSlice:
         self.s_bg = self.root_window.second_bg
         self.t_bg = self.root_window.third_bg
         self.fg = self.root_window.fg
+        self.ag = self.root_window.ag
 
         self.width = width
         self.height = 50
@@ -80,14 +81,14 @@ class RequestSlice:
 
         accept_button = tk.Button(content_frame, text="Accept", command=self.accept_request)
         accept_button.config(font=("Montserrat", 20, "bold"), fg=self.fg, bg=self.t_bg,
-                             activebackground="#f0f", activeforeground=self.fg)
+                             activebackground=self.ag, activeforeground=self.fg)
         accept_button.bind("<Enter>", lambda x: accept_button.config(bg=self.s_bg))
         accept_button.bind("<Leave>", lambda x: accept_button.config(bg=self.t_bg))
         accept_button.place(x=670, y=9)
 
         decline_button = tk.Button(content_frame, text="Decline", command=self.decline_request)
         decline_button.config(font=("Montserrat", 20, "bold"), fg=self.fg, bg=self.t_bg,
-                              activebackground="#f0f", activeforeground=self.fg)
+                              activebackground=self.ag, activeforeground=self.fg)
         decline_button.bind("<Enter>", lambda x: decline_button.config(bg=self.s_bg))
         decline_button.bind("<Leave>", lambda x: decline_button.config(bg=self.t_bg))
         decline_button.place(x=540, y=9)
@@ -103,7 +104,7 @@ class RequestSlice:
 
         view_button = tk.Button(self.frame, text="View", command=self.view_request)
         view_button.config(bg=self.bg, fg=self.fg,
-                           font=("Montserrat", 13), activebackground="#f0f",
+                           font=("Montserrat", 13), activebackground=self.ag,
                            activeforeground=self.fg, highlightcolor=self.bg)
         view_button.pack(pady=2, side=tk.RIGHT, padx=6)
         view_button.bind("<Enter>", lambda event: view_button.config(bg=self.t_bg))
@@ -111,7 +112,7 @@ class RequestSlice:
 
         decline_button = tk.Button(self.frame, text="Decline", command=self.decline_request)
         decline_button.config(bg=self.bg, fg=self.fg,
-                              font=("Montserrat", 13), activebackground="#f0f",
+                              font=("Montserrat", 13), activebackground=self.ag,
                               activeforeground=self.fg, highlightcolor=self.bg)
         decline_button.pack(pady=2, side=tk.RIGHT)
         decline_button.bind("<Enter>", lambda event: decline_button.config(bg=self.t_bg))

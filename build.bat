@@ -1,7 +1,5 @@
 @echo off
 
-cd
-
 PyInstaller launcher.py --noconsole -i favicon.ico -n Stalker -y
 
 if exist "Stalker App" (
