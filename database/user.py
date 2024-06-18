@@ -2,6 +2,8 @@ from database.db import *
 
 from datetime import datetime
 
+from tkinter import messagebox
+
 
 today = datetime.today().strftime('%m-%d-%y')
 
@@ -75,3 +77,28 @@ def update_last_date(name):
     update_query = {"name": name}
     update_value = {"$set": {"last_login": today}}
     user_data.update_one(update_query, update_value)
+
+
+def set_user_data(name, color_palette):
+    user_stock = stock_data.find_one({"name": name})
+    user_preferences = preferences_data.find_one({"name": name})
+
+    if not user_stock:
+        stock_insert = {"name": name, "followed": {}, "placeholder_stocks": {}}
+        stock_data.insert_one(stock_insert)
+    if not user_preferences:
+        preferences_insert = color_palette.copy()
+        preferences_insert["name"] = name
+        preferences_data.insert_one(preferences_insert)
+
+
+def get_color_palette(name):
+    pref = dict(preferences_data.find_one({"name": name}))
+    del pref["name"]
+    return pref
+
+
+def set_color_palette(name, palette):
+    update_query = {"name": name}
+    update_value = {"$set": dict(palette)}
+    preferences_data.update_one(update_query, update_value)

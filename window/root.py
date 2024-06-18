@@ -10,18 +10,25 @@ import tkinter as tk
 
 class RootWindow:
     def __init__(self, launcher):
+        self.launcher = launcher
+
         # Window Data
         self.root = tk.Tk()
         self.size = (1100, 700)
 
-        self.launcher = launcher
+        # Color Palette
+        self.def_color = uc.color_palette.copy()
+        self.color = uc.color_palette
 
-        self.main_bg = uc.rgb_to_hex(55, 79, 78)
+        self.main_bg = self.color["main_bg"]
         self.second_bg = uc.rgb_to_hex(45, 69, 68)
         self.third_bg = uc.rgb_to_hex(76, 115, 113)
 
         self.fg = uc.rgb_to_hex(245, 250, 250)
         self.ag = uc.rgb_to_hex(255, 0, 255)
+
+        self.stock_up = uc.rgb_to_hex(51, 255, 58)
+        self.stock_down = uc.rgb_to_hex(255, 51, 51)
 
         self.popup = up.Popup(self.root, self)
 
@@ -41,6 +48,8 @@ class RootWindow:
         self.root.iconbitmap('favicon.ico')
 
     def layout(self):
+        self.taskbar = taskbar.Taskbar(self.root, self)
+
         self.taskbar.clear()
         self.taskbar.place()
         self.set_section(Sect(self.root, self, self.main_bg, self.fg))
@@ -56,8 +65,24 @@ class RootWindow:
         self.section = section
         self.section.activate()
 
+    def set_palette(self, palette):
+        self.color = palette
+        self.main_bg = palette["main_bg"]
+        self.second_bg = palette["second_bg"]
+        self.third_bg = palette["third_bg"]
+        self.fg = palette["foreground"]
+        self.ag = palette["active_ground"]
+        self.stock_up = palette["stock_up"]
+        self.stock_down = palette["stock_down"]
+
     def set_binds(self):
+        def reset_color():
+            self.set_palette(self.def_color)
+            self.layout()
+            if self.launcher.user_data is None:
+                self.login_screen.activate()
         self.root.bind("<Escape>", lambda x: self.exit())
+        self.root.bind('<Shift-Control-Key-R>', lambda x: reset_color())
 
     def launch(self):
         self.root.mainloop()

@@ -38,7 +38,7 @@ class UserSlice:
 
     def user_win_config(self, win) -> None:
         win.resizable(False, False)
-        win.geometry("800x550")
+        win.geometry("800x400")
         win.title(self.user["name"] + " | Control Panel")
         win.config(bg=self.t_bg)
 

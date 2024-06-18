@@ -2,7 +2,7 @@ from window.layout.section import Section
 
 import tkinter as tk
 
-import webbrowser as web
+from window.utils.website import OpenSite
 
 
 class DataSrcSection(Section):
@@ -23,9 +23,11 @@ This is simply a tool to help you manage any stocks, as well as make decisions.
 
 To visit the site, press the button below."""
 
+        self.site = OpenSite()
+
     def activate(self):
         def visit_site():
-            web.open("https://finance.yahoo.com/most-active/")
+            self.site.open_yahoo()
 
         title = tk.Label(self.frame, text="Stock Data Source", font=("Montserrat", 32, "bold"))
         title.config(bg=self.bg, fg=self.fg)

@@ -1,5 +1,6 @@
 import window.layout.taskbar_item as ti
 import window.layout.section as sect
+from window.layout.sections.account import AccountSection
 
 from window.layout.sections.data_src import DataSrcSection as DataSrc
 from window.layout.sections.stock_searcher import StockSearcherSection as StockSearcher
@@ -40,8 +41,12 @@ class Taskbar:
                            None, self.width, self.root_window.exit, modified=True),
             ti.TaskbarItem(self.root_window.second_bg, self.root_window.third_bg, self.root_window.fg,
                            self.root_window.ag, "Log out",
-                           None, self.width, self.root_window.login_screen.activate, modified=True)
+                           None, self.width, self.logout, modified=True)
         ]
+
+    def logout(self):
+        self.root_window.set_palette(self.root_window.def_color)
+        self.root_window.login_screen.activate()
 
     def place(self):
         self.frame.place(x=0, y=0, width=self.width, height=self.root_window.size[1])
@@ -62,7 +67,7 @@ class Taskbar:
                                          self.root_window.fg)))
 
         for item in range(len(self.items)):
-            self.items[item].config_frame(self.frame, item * self.items[item].base_height - (item - 1))
+            self.items[item].config_frame(self.frame, item * self.items[item].base_height - (item - 1) - 2)
 
         index = 1
         for item in self.bottom_options + bottom:
@@ -80,7 +85,14 @@ class Taskbar:
         if clearance == 3:
             added_items[1].append(
                 ti.TaskbarItem(self.root_window.second_bg, self.root_window.third_bg, self.root_window.fg,
-                               self.root_window.ag,"Admin Panel", AdminPanel(self.root, self.root_window),
+                               self.root_window.ag, "Admin Panel", AdminPanel(self.root, self.root_window),
                                self.width, self.root_window.set_section))
+
+        if self.root_window.launcher.user_data is not None:
+            added_items[1].append(
+                ti.TaskbarItem(self.root_window.second_bg, self.root_window.third_bg, self.root_window.fg,
+                               self.root_window.ag, "Account", AccountSection(self.root, self.root_window),
+                               self.width, self.root_window.set_section)
+            )
 
         return added_items

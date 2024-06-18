@@ -1,5 +1,7 @@
 from window.layout.section import Section
 
+from window.utils.website import OpenSite
+
 import tkinter as tk
 
 
@@ -14,6 +16,8 @@ class StockSearcherSection(Section):
 
         self.search_frame = None
         self.display_frame = None
+
+        self.help = OpenSite()
 
     def search_ticker(self, ticker) -> None:
         print(f"Searching ticker: " + str(ticker))
@@ -38,6 +42,21 @@ class StockSearcherSection(Section):
         search_button.config(bg=self.t_bg, fg=self.fg, font=("Montserrat", 14))
         search_button.pack(side=tk.LEFT, pady=8, padx=5)
         self.root.bind("<Return>", lambda x: search_button.invoke())
+
+        help_button = tk.Button(self.search_frame, text="Help", width=10, activebackground=self.root_window.ag,
+                                activeforeground=self.fg, command=self.help.open_docs)
+        help_button.bind("<Enter>", lambda x: help_button.config(bg=self.bg))
+        help_button.bind("<Leave>", lambda x: help_button.config(bg=self.t_bg))
+        help_button.config(bg=self.t_bg, fg=self.fg, font=("Montserrat", 14))
+        help_button.pack(side=tk.RIGHT, pady=8, padx=5)
+
+        ticker_button = tk.Button(self.search_frame, text="Search Tickers", width=15,
+                                  activebackground=self.root_window.ag, activeforeground=self.fg,
+                                  command=self.help.open_yahoo)
+        ticker_button.bind("<Enter>", lambda x: ticker_button.config(bg=self.bg))
+        ticker_button.bind("<Leave>", lambda x: ticker_button.config(bg=self.t_bg))
+        ticker_button.config(bg=self.t_bg, fg=self.fg, font=("Montserrat", 14))
+        ticker_button.pack(side=tk.RIGHT, pady=8, padx=5)
 
     def create_display_frame(self) -> None:
         self.display_frame = tk.Frame(self.frame)

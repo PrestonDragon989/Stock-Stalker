@@ -29,6 +29,8 @@ class LoginScreen:
     def exit(self):
         self.frame.destroy()
         self.root_window.layout()
+        self.root.unbind("<Control-Key-s>")
+        self.root.unbind("<Control-KeyRelease-s>")
 
     def activate_login(self, attempt_login):
         login_frame = tk.Frame(self.frame)
@@ -47,8 +49,10 @@ class LoginScreen:
         password_title.pack(pady=150.5)
         password_box = tk.Entry(login_frame)
         password_box.config(bg=self.t_bg, fg=self.fg, font=("Montserrat", 21), justify='center',
-                            insertbackground=self.fg)
+                            insertbackground=self.fg, show="*")
         password_box.place(x=(self.width / 2) / 2 - 175, y=265, width=350, height=50)
+        self.root.bind("<Control-Key-s>", lambda x: password_box.config(show=""))
+        self.root.bind("<Control-KeyRelease-s>", lambda x: password_box.config(show="*"))
 
         login_button = tk.Button(login_frame, text="Login",
                                  command=lambda: attempt_login(name_box.get(), password_box.get()))
@@ -66,6 +70,7 @@ class LoginScreen:
                 password_box.focus()
             else:
                 login_button.invoke()
+
         self.root.bind('<Return>', cycle_focus)
 
     def activate_account_request(self):
@@ -129,6 +134,7 @@ class LoginScreen:
         send_button.pack(pady=175)
 
     def activate(self):
+        self.launcher.user_data = None
         self.frame = tk.Frame(self.root)
 
         def attempt_login(name, password):
@@ -137,6 +143,8 @@ class LoginScreen:
                 if self.db.login_check(name, password):
                     self.launcher.user_data = self.db.get_data(name)
                     self.db.update_last_date(name)
+                    self.db.set_user_data(name, self.root_window.def_color)
+                    self.root_window.set_palette(self.db.get_color_palette(name))
                     self.root.unbind("<Return>")
                     self.exit()
                 else:
