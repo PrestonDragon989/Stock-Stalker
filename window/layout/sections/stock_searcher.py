@@ -26,8 +26,8 @@ class StockSearcherSection(Section):
 
     def create_search_frame(self) -> None:
         self.search_frame = tk.Frame(self.frame, height=125)
-        self.search_frame.config(bg=self.s_bg, highlightcolor="black", highlightthickness=1,
-                                 highlightbackground="black", height=75)
+        self.search_frame.config(bg=self.s_bg, highlightcolor=self.root_window.border, highlightthickness=1,
+                                 highlightbackground=self.root_window.border, height=75)
         self.search_frame.pack(fill=tk.X, expand=False)
 
         ticker_input = tk.Entry(self.search_frame, width=20)
@@ -60,8 +60,8 @@ class StockSearcherSection(Section):
 
     def create_display_frame(self) -> None:
         self.display_frame = tk.Frame(self.frame)
-        self.display_frame.config(bg=self.s_bg, highlightcolor="black",
-                                  highlightthickness=1, highlightbackground="black")
+        self.display_frame.config(bg=self.s_bg, highlightcolor=self.root_window.border,
+                                  highlightthickness=1, highlightbackground=self.root_window.border)
         self.display_frame.pack(fill=tk.BOTH, expand=True)
 
     def activate(self):

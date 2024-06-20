@@ -39,7 +39,7 @@ class AdminPanelSection(Section):
                                     darkcolor=self.bg,
                                     background=self.t_bg,
                                     troughcolor=self.s_bg,
-                                    bordercolor="black",
+                                    bordercolor=self.root_window.border,
                                     arrowcolor=self.t_bg)
 
     def bind_widgets_scroll(self, widget, canvas):
@@ -53,7 +53,7 @@ class AdminPanelSection(Section):
         self.accounts_frame = tk.Frame(self.frame)
 
         # Requests frame
-        self.requests_frame.config(bg=self.s_bg, highlightthickness=2, highlightbackground="black")
+        self.requests_frame.config(bg=self.s_bg, highlightthickness=2, highlightbackground=self.root_window.border)
         self.requests_frame.place(x=-1, y=100, width=self.width / 2, height=self.height - 100)
         self.requests_canvas = tk.Canvas(self.requests_frame)
         self.requests_canvas.config(bg=self.s_bg, highlightthickness=2, highlightbackground=self.s_bg)
@@ -70,7 +70,7 @@ class AdminPanelSection(Section):
         self.requests_scrollbar.pack(side="left", fill="y")
 
         # Account Frame
-        self.accounts_frame.config(bg=self.bg, highlightthickness=2, highlightbackground="black")
+        self.accounts_frame.config(bg=self.bg, highlightthickness=2, highlightbackground=self.root_window.border)
         self.accounts_frame.place(x=self.width / 2 - 1, y=100, width=self.width / 2 + 1, height=self.height - 100)
         self.accounts_canvas = tk.Canvas(self.accounts_frame)
         self.accounts_canvas.config(bg=self.s_bg, highlightthickness=2, highlightbackground=self.s_bg)

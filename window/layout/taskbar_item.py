@@ -2,11 +2,12 @@ import tkinter as tk
 
 
 class TaskbarItem:
-    def __init__(self, main_bg, second_bg, fg, ag, text, section, width_cap, section_setter, modified=False):
+    def __init__(self, main_bg, second_bg, fg, ag, text, section, width_cap, section_setter, border, modified=False):
         self.main_bg = main_bg
         self.second_bg = second_bg
         self.fg = fg
         self.ag = ag
+        self.border = border
 
         self.text = text
         self.section = section
@@ -43,12 +44,13 @@ class TaskbarItem:
             self.section_setter()
 
     def config_frame(self, frame, y):
-        self.frame = tk.Frame(frame, borderwidth=1, relief=tk.SOLID)
+        self.frame = tk.Frame(frame, highlightthickness=1, highlightcolor=self.border,
+                              highlightbackground=self.border, relief=tk.SOLID)
 
         text = tk.Label(self.frame, bg=self.main_bg, fg=self.fg, text=self.text, font=("Montserrat", 14, "bold"))
         text.place(relx=0.5, rely=0.5, anchor=tk.CENTER)
 
-        self.frame.config(bg=self.main_bg, height=self.base_height, highlightbackground=self.fg)
+        self.frame.config(bg=self.main_bg, height=self.base_height)
 
         self.frame.bind("<Enter>", self.enter)
         self.frame.bind("<Leave>", self.leave)

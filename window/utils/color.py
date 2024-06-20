@@ -48,5 +48,6 @@ color_palette = {
     "foreground": rgb_to_hex(245, 250, 250),
     "active_ground": rgb_to_hex(255, 0, 255),
     "stock_up": rgb_to_hex(51, 255, 58),
-    "stock_down": rgb_to_hex(255, 51, 51)
+    "stock_down": rgb_to_hex(255, 51, 51),
+    "border_color": rgb_to_hex(0, 0, 0)
 }

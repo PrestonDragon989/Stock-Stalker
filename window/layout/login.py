@@ -1,6 +1,8 @@
 import tkinter as tk
 from tkinter import messagebox
 
+from window.layout.sections.welcome import WelcomeSection
+
 
 class LoginScreen:
     def __init__(self, root, root_window, launcher):
@@ -34,7 +36,8 @@ class LoginScreen:
 
     def activate_login(self, attempt_login):
         login_frame = tk.Frame(self.frame)
-        login_frame.config(bg=self.s_bg, borderwidth=1, relief=tk.SOLID)
+        login_frame.config(bg=self.s_bg, highlightthickness=1, relief=tk.SOLID,
+                           highlightbackground=self.root_window.border, highlightcolor=self.root_window.border)
         login_frame.place(x=self.width / 2, width=self.width / 2, y=100, height=self.height - 100)
 
         name_title = tk.Label(login_frame, text="Name")
@@ -63,7 +66,7 @@ class LoginScreen:
         login_button.bind("<Leave>", lambda event: login_button.config(bg=self.t_bg))
         login_button.pack(pady=25)
 
-        def cycle_focus(*args):
+        def cycle_focus():
             if name_box.get() == "" or name_box.get() is None:
                 name_box.focus()
             elif password_box.get() == "" or password_box.get() is None:
@@ -71,7 +74,7 @@ class LoginScreen:
             else:
                 login_button.invoke()
 
-        self.root.bind('<Return>', cycle_focus)
+        self.root.bind('<Return>', lambda x: cycle_focus())
 
     def activate_account_request(self):
         def send_request(name, preferred_name, password, explanation):
@@ -94,8 +97,9 @@ class LoginScreen:
                                     "Connections are is still loading. Wait a couple more seconds.")
 
         create_frame = tk.Frame(self.frame)
-        create_frame.config(bg=self.s_bg, borderwidth=1, relief=tk.SOLID)
-        create_frame.place(x=0, width=self.width / 2, y=100, height=self.height + 100)
+        create_frame.config(bg=self.s_bg, highlightthickness=1, highlightbackground=self.root_window.border,
+                            highlightcolor=self.root_window.border, relief=tk.SOLID)
+        create_frame.place(x=0, width=self.width / 2, y=100, height=self.height - 100)
 
         entries = [
             ["Name", None],
@@ -147,6 +151,7 @@ class LoginScreen:
                     self.root_window.set_palette(self.db.get_color_palette(name))
                     self.root.unbind("<Return>")
                     self.exit()
+                    self.root_window.set_section(WelcomeSection(self.root, self.root_window))
                 else:
                     self.root_window.popup.activate("Login incorrect. Try checking spelling, and cases. Both the name "
                                                     "and password are space and case sensitive. If you forget your "

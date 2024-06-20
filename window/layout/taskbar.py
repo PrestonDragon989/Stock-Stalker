@@ -18,30 +18,34 @@ class Taskbar:
         self.width = 200
 
         self.bg = self.root_window.second_bg
-        self.frame.config(bg=self.bg, borderwidth=1, relief=tk.SOLID)
+        self.frame.config(bg=self.bg, highlightthickness=1, highlightcolor=self.root_window.border,
+                          highlightbackground=self.root_window.border, relief=tk.SOLID)
 
         self.items = [
             ti.TaskbarItem(self.root_window.second_bg, self.root_window.third_bg, self.root_window.fg,
                            self.root_window.ag, "Stock Searcher",
-                           StockSearcher(self.root, self.root_window), self.width, self.root_window.set_section),
+                           StockSearcher(self.root, self.root_window), self.width,
+                           self.root_window.set_section, self.root_window.border),
 
             ti.TaskbarItem(self.root_window.second_bg, self.root_window.third_bg, self.root_window.fg,
                            self.root_window.ag, "Stock Keeper",
                            sect.Section(self.root, self.root_window, self.root_window.main_bg,
-                                        self.root_window.main_bg), self.width, self.root_window.set_section),
+                                        self.root_window.main_bg), self.width,
+                           self.root_window.set_section, self.root_window.border),
 
             ti.TaskbarItem(self.root_window.second_bg, self.root_window.third_bg, self.root_window.fg,
                            self.root_window.ag, "Data Src",
-                           DataSrc(self.root, self.root_window), self.width, self.root_window.set_section),
+                           DataSrc(self.root, self.root_window), self.width,
+                           self.root_window.set_section, self.root_window.border),
         ]
 
         self.bottom_options = [
             ti.TaskbarItem(self.root_window.second_bg, self.root_window.third_bg, self.root_window.fg,
                            self.root_window.ag, "Exit",
-                           None, self.width, self.root_window.exit, modified=True),
+                           None, self.width, self.root_window.exit, self.root_window.border, modified=True),
             ti.TaskbarItem(self.root_window.second_bg, self.root_window.third_bg, self.root_window.fg,
                            self.root_window.ag, "Log out",
-                           None, self.width, self.logout, modified=True)
+                           None, self.width, self.logout, self.root_window.border, modified=True)
         ]
 
     def logout(self):
@@ -86,13 +90,12 @@ class Taskbar:
             added_items[1].append(
                 ti.TaskbarItem(self.root_window.second_bg, self.root_window.third_bg, self.root_window.fg,
                                self.root_window.ag, "Admin Panel", AdminPanel(self.root, self.root_window),
-                               self.width, self.root_window.set_section))
+                               self.width, self.root_window.set_section, self.root_window.border))
 
         if self.root_window.launcher.user_data is not None:
             added_items[1].append(
                 ti.TaskbarItem(self.root_window.second_bg, self.root_window.third_bg, self.root_window.fg,
                                self.root_window.ag, "Account", AccountSection(self.root, self.root_window),
-                               self.width, self.root_window.set_section)
-            )
+                               self.width, self.root_window.set_section, self.root_window.border))
 
         return added_items

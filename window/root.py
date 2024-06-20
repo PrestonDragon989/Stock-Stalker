@@ -26,6 +26,7 @@ class RootWindow:
 
         self.fg = uc.rgb_to_hex(245, 250, 250)
         self.ag = uc.rgb_to_hex(255, 0, 255)
+        self.border = uc.rgb_to_hex(0, 0, 255)
 
         self.stock_up = uc.rgb_to_hex(51, 255, 58)
         self.stock_down = uc.rgb_to_hex(255, 51, 51)
@@ -72,6 +73,7 @@ class RootWindow:
         self.third_bg = palette["third_bg"]
         self.fg = palette["foreground"]
         self.ag = palette["active_ground"]
+        self.border = palette["border_color"]
         self.stock_up = palette["stock_up"]
         self.stock_down = palette["stock_down"]
 

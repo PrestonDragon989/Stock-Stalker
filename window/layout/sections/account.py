@@ -56,6 +56,7 @@ class AccountSection(Section):
             "Negative Stock": "stock_down",
             "Positive Stock": "stock_up",
             "Active Color": "active_ground",
+            "Border Color": "border_color"
         }
         color_copy = self.color.copy()
         colors_frame = tk.Frame(self.frame, bg=self.color["main_bg"])
