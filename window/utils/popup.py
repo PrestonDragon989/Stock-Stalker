@@ -2,12 +2,18 @@ import tkinter as tk
 
 
 class Popup:
-    def __init__(self, root, root_window):
+    def __init__(self, root, root_window, true_root=False):
         self.root = root
         self.root_window = root_window
 
+        self.true_root = true_root
+
     def activate(self, text, fontsize=15):
-        popup = tk.Toplevel(self.root)
+        if not self.true_root:
+            popup = tk.Toplevel(self.root)
+        else:
+            popup = tk.Tk()
+            popup.bind("<<RootDestroy>>", lambda x: popup.destroy())
         popup.title(f"{self.root_window.launcher.name} Alert")
         popup.resizable(False, False)
         popup.geometry("300x200")
@@ -24,5 +30,8 @@ class Popup:
         close.pack(side=tk.BOTTOM, pady=10)
         close.bind("<Enter>", lambda x: close.config(bg=self.root_window.third_bg))
         close.bind("<Leave>", lambda x: close.config(bg=self.root_window.second_bg))
+
+        popup.bind("<Return>", lambda x: close.invoke())
+        popup.focus()
 
         popup.mainloop()

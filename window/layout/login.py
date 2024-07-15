@@ -135,10 +135,11 @@ class LoginScreen:
                            activeforeground=self.fg, highlightcolor=self.t_bg)
         send_button.bind("<Enter>", lambda event: send_button.config(bg=self.bg))
         send_button.bind("<Leave>", lambda event: send_button.config(bg=self.t_bg))
-        send_button.pack(pady=175)
+        send_button.place(width=300, height=65, x=125, y=505)
 
     def activate(self):
         self.launcher.user_data = None
+        self.launcher.user_stock = None
         self.frame = tk.Frame(self.root)
 
         def attempt_login(name, password):
@@ -149,6 +150,7 @@ class LoginScreen:
                     self.db.update_last_date(name)
                     self.db.set_user_data(name, self.root_window.def_color)
                     self.root_window.set_palette(self.db.get_color_palette(name))
+                    self.launcher.user_stock = self.db.get_user_stock_data(name)
                     self.root.unbind("<Return>")
                     self.exit()
                     self.root_window.set_section(WelcomeSection(self.root, self.root_window))

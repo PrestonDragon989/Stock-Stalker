@@ -53,8 +53,8 @@ class AccountSection(Section):
             "Background 2": "second_bg",
             "Background 3": "third_bg",
             "Foreground": "foreground",
-            "Negative Stock": "stock_down",
-            "Positive Stock": "stock_up",
+            "Grid Color": "grid_color",
+            "Stock Color": "stock_color",
             "Active Color": "active_ground",
             "Border Color": "border_color"
         }
@@ -62,9 +62,9 @@ class AccountSection(Section):
         colors_frame = tk.Frame(self.frame, bg=self.color["main_bg"])
         colors_frame.place(x=50, y=350, height=600, width=275)
         col_left = tk.Frame(colors_frame, width=200, bg=self.color["main_bg"])
-        col_left.pack(side=tk.LEFT, anchor=tk.NW)
+        col_left.place(y=0, x=0, width=115, height=600)
         col_right = tk.Frame(colors_frame, width=200, bg=self.color["main_bg"])
-        col_right.pack(side=tk.RIGHT, anchor=tk.NE)
+        col_right.place(y=0, x=160, width=115, height=600)
         for i, color_set in enumerate(color_changer_sets):
             def change_color(k):
                 new = colorchooser.askcolor(initialcolor=color_copy[k])[1]
@@ -78,10 +78,10 @@ class AccountSection(Section):
             key = color_changer_sets[color_set]
             bright = hcb(self.color[key])
             button = tk.Button(col_left if e else col_right, text=color_set, font=("Montserrat", 12),
-                               command=lambda k=key: change_color(k))
+                               command=lambda k=key: change_color(k), width=80)
             button.config(activebackground=self.color["active_ground"], bg=self.color[key],
                           fg="black" if bright >= 400 else "white")
-            button.pack(side=tk.TOP, anchor=tk.W if e else tk.E, pady=10)
+            button.pack(side=tk.TOP, anchor=tk.W if e else tk.E, pady=10, fill=tk.X)
 
         save_colors = tk.Button(self.frame, text="Save Colors", command=lambda: self.root_window.launcher.database.
                                 set_color_palette(self.user["name"], self.root_window.color))
@@ -104,6 +104,7 @@ class AccountSection(Section):
         reset_colors.place(x=215, y=600, width=110, height=40)
 
     def activate(self):
+        print(self.root_window.launcher.user_stock)
         self.show_info()
 
         super().place()

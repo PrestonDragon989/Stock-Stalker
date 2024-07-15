@@ -2,6 +2,8 @@ import license
 
 from database.start import DatabaseStarter as DBS
 
+import stocks.client as sc
+
 from window.root import RootWindow
 
 
@@ -20,6 +22,9 @@ class Launcher:
         self.database = None
 
         self.user_data = None
+        self.user_stock = None
+
+        self.stock_client = sc
 
         self.root = RootWindow(self)
 

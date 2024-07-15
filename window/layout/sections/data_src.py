@@ -1,3 +1,5 @@
+from tktooltip import ToolTip
+
 from window.layout.section import Section
 
 import tkinter as tk
@@ -47,5 +49,6 @@ To visit the site, press the button below."""
         yfinance_page.bind("<Enter>", lambda event: yfinance_page.config(bg=self.root_window.third_bg))
         yfinance_page.bind("<Leave>", lambda event: yfinance_page.config(bg=self.root_window.second_bg))
         yfinance_page.pack(pady=25)
+        ToolTip(yfinance_page, msg=f"Visit site {self.site.yahoo_site}", delay=0.5)
 
         super().place()

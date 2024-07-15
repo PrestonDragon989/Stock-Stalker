@@ -47,7 +47,7 @@ color_palette = {
     "third_bg": rgb_to_hex(76, 115, 113),
     "foreground": rgb_to_hex(245, 250, 250),
     "active_ground": rgb_to_hex(255, 0, 255),
-    "stock_up": rgb_to_hex(51, 255, 58),
-    "stock_down": rgb_to_hex(255, 51, 51),
+    "stock_color": rgb_to_hex(51, 255, 58),
+    "grid_color": rgb_to_hex(255, 51, 51),
     "border_color": rgb_to_hex(0, 0, 0)
 }

@@ -21,15 +21,15 @@ class RootWindow:
         self.color = uc.color_palette
 
         self.main_bg = self.color["main_bg"]
-        self.second_bg = uc.rgb_to_hex(45, 69, 68)
-        self.third_bg = uc.rgb_to_hex(76, 115, 113)
+        self.second_bg = self.color["second_bg"]
+        self.third_bg = self.color["third_bg"]
 
-        self.fg = uc.rgb_to_hex(245, 250, 250)
-        self.ag = uc.rgb_to_hex(255, 0, 255)
-        self.border = uc.rgb_to_hex(0, 0, 255)
+        self.fg = self.color["foreground"]
+        self.ag = self.color["active_ground"]
+        self.border = self.color["border_color"]
 
-        self.stock_up = uc.rgb_to_hex(51, 255, 58)
-        self.stock_down = uc.rgb_to_hex(255, 51, 51)
+        self.sc = self.color["stock_color"]
+        self.gc = self.color["grid_color"]
 
         self.popup = up.Popup(self.root, self)
 
@@ -74,8 +74,8 @@ class RootWindow:
         self.fg = palette["foreground"]
         self.ag = palette["active_ground"]
         self.border = palette["border_color"]
-        self.stock_up = palette["stock_up"]
-        self.stock_down = palette["stock_down"]
+        self.sc = palette["stock_color"]
+        self.gc = palette["grid_color"]
 
     def set_binds(self):
         def reset_color():
@@ -85,6 +85,11 @@ class RootWindow:
                 self.login_screen.activate()
         self.root.bind("<Escape>", lambda x: self.exit())
         self.root.bind('<Shift-Control-Key-R>', lambda x: reset_color())
+
+        def on_primary_close():
+            self.root.event_generate("<<RootDestroy>>")
+            self.root.destroy()
+        self.root.protocol("WM_DELETE_WINDOW", on_primary_close)
 
     def launch(self):
         self.root.mainloop()

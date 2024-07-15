@@ -2,8 +2,6 @@ from database.db import *
 
 from datetime import datetime
 
-from tkinter import messagebox
-
 
 today = datetime.today().strftime('%m-%d-%y')
 
@@ -84,7 +82,7 @@ def set_user_data(name, color_palette):
     user_preferences = preferences_data.find_one({"name": name})
 
     if not user_stock:
-        stock_insert = {"name": name, "followed": {}, "placeholder_stocks": {}}
+        stock_insert = {"name": name, "followed": [], "placeholder_stocks": {}}
         stock_data.insert_one(stock_insert)
     if not user_preferences:
         preferences_insert = color_palette.copy()
@@ -102,3 +100,17 @@ def set_color_palette(name, palette):
     update_query = {"name": name}
     update_value = {"$set": dict(palette)}
     preferences_data.update_one(update_query, update_value)
+
+
+def get_user_stock_data(name):
+    if user_exists(name):
+        query = {"name": name}
+        result = stock_data.find_one(query)
+        return result
+    return False
+
+
+def update_followed_tickers(name, followed):
+    update_query = {"name": name}
+    update_value = {"$set": {"followed": followed}}
+    stock_data.update_one(update_query, update_value)
