@@ -1,10 +1,11 @@
 import window.layout.taskbar_item as ti
 import window.layout.section as sect
-from window.layout.sections.account import AccountSection
 
 from window.layout.sections.data_src import DataSrcSection as DataSrc
 from window.layout.sections.stock_searcher import StockSearcherSection as StockSearcher
-from window.layout.sections.admin_panel import AdminPanelSection as AdminPanel
+from window.layout.sections.stock_keeper import StockKeeperSection as StockKeeper
+
+from window.layout.sections.account import AccountSection
 
 import tkinter as tk
 
@@ -29,8 +30,7 @@ class Taskbar:
 
             ti.TaskbarItem(self.root_window.second_bg, self.root_window.third_bg, self.root_window.fg,
                            self.root_window.ag, "Stock Keeper",
-                           sect.Section(self.root, self.root_window, self.root_window.main_bg,
-                                        self.root_window.main_bg), self.width,
+                           StockKeeper(self.root, self.root_window), self.width,
                            self.root_window.set_section, self.root_window.border),
 
             ti.TaskbarItem(self.root_window.second_bg, self.root_window.third_bg, self.root_window.fg,
@@ -45,7 +45,11 @@ class Taskbar:
                            None, self.width, self.root_window.exit, self.root_window.border, modified=True),
             ti.TaskbarItem(self.root_window.second_bg, self.root_window.third_bg, self.root_window.fg,
                            self.root_window.ag, "Log out",
-                           None, self.width, self.logout, self.root_window.border, modified=True)
+                           None, self.width, self.logout, self.root_window.border, modified=True),
+            ti.TaskbarItem(self.root_window.second_bg, self.root_window.third_bg, self.root_window.fg,
+                           self.root_window.ag, "Account",
+                           AccountSection(self.root, self.root_window), self.width,
+                           self.root_window.set_section, self.root_window.border),
         ]
 
     def logout(self):
@@ -62,7 +66,8 @@ class Taskbar:
             widget.destroy()
 
     def update_items(self):
-        top, bottom = self.adapt_for_clearance()
+        if self.root_window.launcher.false_account:
+            self.bottom_options.remove(self.bottom_options[-1])
 
         self.frame.bind("<Button-1>", lambda event:
                         self.root_window.set_section(
@@ -74,28 +79,7 @@ class Taskbar:
             self.items[item].config_frame(self.frame, item * self.items[item].base_height - (item - 1) - 2)
 
         index = 1
-        for item in self.bottom_options + bottom:
+        for item in self.bottom_options:
             item.config_frame(self.frame, self.root_window.size[1] -
                               (index * item.base_height + 1 - (index - 1)))
             index += 1
-
-    def adapt_for_clearance(self):
-        if not self.root_window.launcher.user_data:
-            return [[], []]
-        added_items = [[], []]
-
-        clearance = self.root_window.launcher.user_data["clearance"]
-
-        if clearance == 3:
-            added_items[1].append(
-                ti.TaskbarItem(self.root_window.second_bg, self.root_window.third_bg, self.root_window.fg,
-                               self.root_window.ag, "Admin Panel", AdminPanel(self.root, self.root_window),
-                               self.width, self.root_window.set_section, self.root_window.border))
-
-        if self.root_window.launcher.user_data is not None:
-            added_items[1].append(
-                ti.TaskbarItem(self.root_window.second_bg, self.root_window.third_bg, self.root_window.fg,
-                               self.root_window.ag, "Account", AccountSection(self.root, self.root_window),
-                               self.width, self.root_window.set_section, self.root_window.border))
-
-        return added_items

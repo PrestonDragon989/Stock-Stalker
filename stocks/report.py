@@ -24,6 +24,8 @@ class Report:
 
         for thing in self.ticker_data.info:
             print(thing, ": ", self.ticker_data.info[thing])
+        hist = self.ticker_data.history("1d")
+        print(hist.columns)
 
     def window_config(self):
         self.window.title(f"{self.quick_ticker_info["name"]} Report")

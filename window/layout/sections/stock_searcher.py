@@ -30,36 +30,45 @@ class StockSearcherSection(Section):
         self.sc = self.root_window.launcher.stock_client
         self.stock_data = None
         self.time_window = "max"
+        self.stock_type = "Close"
 
         self.help = OpenSite()
 
-        self.user_stock = self.root_window.launcher.user_stock
+        self.user_stock = self.root_window.launcher.user["stocks"] if (self.root_window.launcher.user is not
+                                                                       None) else None
 
     def search_ticker(self, ticker) -> None:
         if ticker is None or ticker == "":
             return
         else:
             ticker = ticker.upper()
+        waiting_text = tk.Label(self.display_frame, text="Loading. . .", font=("Montserrat", 20, "bold"))
+        waiting_text.config(fg=self.fg, bg=self.s_bg)
+        waiting_text.pack(anchor=tk.CENTER)
         self.stock_data = self.sc.get_data(ticker, self.time_window, ticker=True)
         if self.stock_data is False:
+            waiting_text.destroy()
             Popup(self.root, self.root_window, true_root=True).activate(f"The ticker: {ticker} does not exist,"
                                                                         " or the connection timed out.", fontsize=18)
         else:
             self.display_frame.destroy()
             self.create_display_frame()
-            historical_data = self.stock_data.history(period=self.time_window)
+            if self.time_window == "1d":
+                historical_data = self.stock_data.history(period=self.time_window, interval="90m")
+            else:
+                historical_data = self.stock_data.history(period=self.time_window)
 
             # Title of company
             title_frame = tk.Frame(self.display_frame, width=800, height=75)
             title_frame.config(bg=self.s_bg)
-            title_frame.place(x=0, y=0, width=898, height=75)
+
             name_title = tk.Label(title_frame, text=self.stock_data.info["longName"])
             name_title.config(fg=self.fg, bg=self.s_bg, font=("Montserrat", 25, "bold"))
             name_title.pack(pady=15)
 
             # Graph of stocks
             graph_frame = tk.Frame(self.display_frame, width=800, height=500)
-            graph_frame.config(bg="#f0f")
+            graph_frame.config(bg=self.t_bg)
             graph_frame.place(x=0, y=75, width=800, height=498)
 
             fig = GraphFigure(figsize=(8, 3), dpi=100)
@@ -67,11 +76,27 @@ class StockSearcherSection(Section):
             ax = fig.add_subplot(111)
             ax.patch.set_facecolor(self.bg)
 
-            ax.plot(historical_data.index, historical_data['Close'], label='Close Price',
+            if self.stock_type == 'Volume':
+                ax_label = 'Volume'
+            elif self.stock_type == 'Dividends':
+                ax_label = 'Dividends per Share Price'
+            elif self.stock_type == 'Stock Splits':
+                ax_label = 'Split Ratio'
+            else:
+                ax_label = f'{self.stock_type} Price'
+            ax.plot(historical_data.index, historical_data[self.stock_type], label=ax_label,
                     color=self.root_window.sc)
-            ax.set_title('Closing Stock Prices', color=self.fg)
+            ax.set_title(f'{self.stock_data.info["longName"]}, {self.stock_type} Stocks', color=self.fg)
             ax.set_xlabel('Date', color=self.fg)
-            ax.set_ylabel('Price (Dollars)', color=self.fg)
+            if self.stock_type == 'Volume':
+                y_label = 'Trading Volume'
+            elif self.stock_type == 'Dividends':
+                y_label = 'Dividends per Share (Dollars)'
+            elif self.stock_type == 'Stock Splits':
+                y_label = 'Split Ratio (New Shares per Old Share)'
+            else:
+                y_label = 'Price (Dollars)'
+            ax.set_ylabel(y_label, color=self.fg)
             ax.tick_params(axis='both', colors=self.fg)
             ax.legend()
             ax.grid(color=self.root_window.gc)
@@ -108,20 +133,18 @@ class StockSearcherSection(Section):
                 ToolTip(tool, msg=toolbar_buttons[button][1], delay=0.5)
 
             followed = self.user_stock["followed"]
-            db = self.root_window.launcher.database
 
             tk.Frame(sidebar_frame, bg=self.t_bg).pack(pady=10)
 
-            def follow_logic(followed_tickers, name):
+            def follow_logic(name):
                 if ticker in followed:
-                    followed_tickers.remove(ticker)
+                    followed.remove(ticker)
                     follow_button.config(text="Follow")
                 else:
-                    followed_tickers.append(ticker)
+                    followed.append(ticker)
                     follow_button.config(text="Unfollow")
-                db.update_followed_tickers(name, followed_tickers)
             follow_button = tk.Button(sidebar_frame, text="Follow" if ticker not in followed else "Unfollow",
-                                      command=lambda: follow_logic(followed, self.user_stock["name"]), width=80)
+                                      command=lambda: follow_logic(followed), width=80)
             follow_button.config(bg=self.t_bg, fg=self.fg, activeforeground=self.fg, font=("Montserrat", 13),
                                  activebackground=self.root_window.ag)
             follow_button.bind("<Enter>", lambda x: follow_button.config(bg=self.bg))
@@ -140,6 +163,24 @@ class StockSearcherSection(Section):
             report_button.bind("<Leave>", lambda x: report_button.config(bg=self.t_bg))
             ToolTip(report_button, msg=f"Get a report of the ticker {ticker}", delay=0.5)
             report_button.pack(pady=3)
+
+            def set_new_type(*args):
+                self.stock_type = selected_type.get()
+                self.search_ticker(ticker)
+            stock_types = ['Close', 'Open', 'Low', 'High', 'Volume', 'Dividends', 'Stock Splits']
+            selected_type = tk.StringVar()
+            selected_type.set(self.stock_type)
+            selected_type.trace_add("write", set_new_type)
+            dropdown_menu = tk.OptionMenu(sidebar_frame, selected_type, *stock_types)
+            dropdown_menu.pack(pady=3)
+            dropdown_menu.config(bg=self.t_bg, activebackground=self.bg, foreground=self.fg,
+                                 activeforeground=self.fg, width=15, font=("Montserrat", 13))
+            dropdown_menu.configure(highlightthickness=0)
+            dropdown_menu["menu"].configure(bg=self.root_window.color["third_bg"], fg=self.fg)
+            ToolTip(dropdown_menu, delay=0.5, msg="Change what you see about the ticker.")
+
+            # Displaying Name Title
+            title_frame.place(x=0, y=0, width=898, height=75)
 
     def create_search_frame(self) -> None:
         self.search_frame = tk.Frame(self.frame, height=125)
@@ -168,7 +209,10 @@ class StockSearcherSection(Section):
         search_button.bind("<Leave>", lambda x: search_button.config(bg=self.t_bg))
         search_button.config(bg=self.t_bg, fg=self.fg, font=("Montserrat", 14))
         search_button.pack(side=tk.LEFT, pady=8, padx=5)
-        self.root.bind("<Return>", lambda x: search_button.invoke())
+        try:
+            self.root.bind("<Return>", lambda x: search_button.invoke())
+        except:
+            pass
 
         help_button = tk.Button(self.search_frame, text="Help", width=10, activebackground=self.root_window.ag,
                                 activeforeground=self.fg, command=self.help.open_docs)
@@ -197,7 +241,7 @@ class StockSearcherSection(Section):
         dropdown_menu.config(bg=self.t_bg, activebackground=self.bg, foreground=self.fg,
                              activeforeground=self.fg, width=15, font=("Montserrat", 17))
         dropdown_menu.configure(highlightthickness=0)
-        dropdown_menu["menu"].configure(bg="white")
+        dropdown_menu["menu"].configure(bg=self.root_window.color["third_bg"], fg=self.fg)
 
     def create_display_frame(self) -> None:
         self.display_frame = tk.Frame(self.frame)

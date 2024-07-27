@@ -9,7 +9,7 @@ class WelcomeSection(Section):
     def __init__(self, root, root_window):
         super().__init__(root, root_window, root_window.main_bg, root_window.fg)
 
-        self.user = self.root_window.launcher.user_data
+        self.user = self.root_window.launcher.user["user"]
 
         self.color = self.root_window.color
 

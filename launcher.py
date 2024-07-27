@@ -1,6 +1,4 @@
-import license
-
-from database.start import DatabaseStarter as DBS
+from acount.controller import AccountController as AC
 
 import stocks.client as sc
 
@@ -10,27 +8,34 @@ from window.root import RootWindow
 class Launcher:
     def __init__(self):
         self.version = "1.0.0"
-
         self.name = "STALKER"
 
         print(f"Welcome to {self.name}! Sorry that you have to use the seen console edition, but it can't be helped.")
 
-        license.ensure()
+        self.account_controller = AC()
 
-        self.dbs = DBS(self.name)
-        self.dbs.start()
-        self.database = None
-
-        self.user_data = None
-        self.user_stock = None
+        self.false_account = False
+        self.file_location = None
+        self.user = None
 
         self.stock_client = sc
 
         self.root = RootWindow(self)
 
-    def update_database(self):
-        self.database = self.dbs.database()
-        return self.database
+    def set_user_data(self, user):
+        self.user = user
+
+    def reset_user_data(self):
+        self.false_account = False
+
+        self.user = None
+
+        self.file_location = None
+
+    def save_file(self):
+        json_data = self.account_controller.to_jason(self.user)
+        file_path = self.file_location
+        self.account_controller.account_creator.save_data(file_path, json_data, self.user["file"]["encrypted"])
 
     def start(self):
         self.root.init_root_data()
@@ -46,5 +51,4 @@ class Launcher:
 
 
 if __name__ == '__main__':
-    lau = Launcher().start().run()
-    lau.database.client.close() if lau.database else None
+    Launcher().start().run()

@@ -15,7 +15,7 @@ def rgb_to_hex(r: int, g: int, b: int) -> str:
 
 def hex_to_rgb(hex_color: str) -> tuple[int, ...]:
     """
-    Simple Converts a hex code (string) into a RGB value (Tuple (R, G, B))
+    Simple Converts a hex code (string) into an RGB value (Tuple (R, G, B))
     Args:
         hex_color: A string of the hex code.
 
@@ -48,6 +48,6 @@ color_palette = {
     "foreground": rgb_to_hex(245, 250, 250),
     "active_ground": rgb_to_hex(255, 0, 255),
     "stock_color": rgb_to_hex(51, 255, 58),
-    "grid_color": rgb_to_hex(255, 51, 51),
+    "grid_color": rgb_to_hex(61, 92, 90),
     "border_color": rgb_to_hex(0, 0, 0)
 }

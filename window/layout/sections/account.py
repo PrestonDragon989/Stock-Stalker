@@ -10,33 +10,33 @@ class AccountSection(Section):
     def __init__(self, root, root_window):
         super().__init__(root, root_window, root_window.main_bg, root_window.fg)
 
-        self.user = self.root_window.launcher.user_data
+        self.user = self.root_window.launcher.user
         self.color = self.root_window.color
 
     def bind_password_show(self, password):
         def no_show(*args):
-            password.config(text="Password: {}".format("*" * len(self.user["password"])))
+            password.config(text="Password: {}".format("*" * len(self.user["user"]["password"])))
 
         def show(*args):
-            password.config(text="Password: {}".format(self.user["password"]))
+            password.config(text="Password: {}".format(self.user["user"]["password"]))
 
         self.root.bind("<Control-Key-s>", show)
         self.root.bind("<KeyRelease-s>", no_show)
 
     def show_info(self):
-        name = tk.Label(self.frame, text=f"{self.user["name"]} | {self.user["preferred_name"]}",
+        name = tk.Label(self.frame, text=f"{self.user["user"]["name"]} | {self.user["user"]["preferred_name"]}",
                         font=("Montserrat", 32, "bold"))
         name.config(bg=self.color["main_bg"], fg=self.color["foreground"])
         name.pack(side=tk.TOP, anchor=tk.W, padx=2)
 
-        password = tk.Label(self.frame, text=f"Password: {"*" * len(self.user["password"])}")
+        password = tk.Label(self.frame, text=f"Password: {"*" * len(self.user["user"]["password"])}")
         password.config(bg=self.color["main_bg"], fg=self.color["foreground"], font=("Montserrat", 20))
         password.pack(side=tk.TOP, anchor=tk.W, padx=50, pady=20)
         self.bind_password_show(password)
 
         info_sets = {
-            ("Last Login: ", self.user["last_login"]),
-            ("Date Joined: ", self.user["date_created"]),
+            ("Last Login: ", self.user["user"]["last_login"]),
+            ("Date Joined: ", self.user["user"]["date_created"]),
         }
         for s in info_sets:
             label = tk.Label(self.frame, text=f"{s[0]}{s[1]}", font=("Montserrat", 20))
@@ -83,8 +83,9 @@ class AccountSection(Section):
                           fg="black" if bright >= 400 else "white")
             button.pack(side=tk.TOP, anchor=tk.W if e else tk.E, pady=10, fill=tk.X)
 
-        save_colors = tk.Button(self.frame, text="Save Colors", command=lambda: self.root_window.launcher.database.
-                                set_color_palette(self.user["name"], self.root_window.color))
+        def set_color():
+            self.root_window.launcher.user["color"] = self.root_window.color
+        save_colors = tk.Button(self.frame, text="Save Colors", command=lambda: set_color())
         save_colors.config(bg=self.color["third_bg"], activebackground=self.color["active_ground"],
                            font=("Montserrat", 13, "bold"), fg=self.color["foreground"])
         save_colors.bind("<Enter>", lambda x: save_colors.config(bg=self.color["second_bg"]))
@@ -104,7 +105,7 @@ class AccountSection(Section):
         reset_colors.place(x=215, y=600, width=110, height=40)
 
     def activate(self):
-        print(self.root_window.launcher.user_stock)
+        print(self.root_window.launcher.user["stocks"])
         self.show_info()
 
         super().place()

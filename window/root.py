@@ -1,3 +1,6 @@
+import sys
+import json
+
 import window.utils.color as uc
 import window.utils.popup as up
 
@@ -49,6 +52,7 @@ class RootWindow:
         self.root.iconbitmap('favicon.ico')
 
     def layout(self):
+        self.recursive_save()
         self.taskbar = taskbar.Taskbar(self.root, self)
 
         self.taskbar.clear()
@@ -59,6 +63,7 @@ class RootWindow:
         if not self.logged_in:
             self.login_screen.activate()
             self.logged_in = True
+        self.recursive_save()
 
     def set_section(self, section):
         if self.section:
@@ -83,13 +88,26 @@ class RootWindow:
             self.layout()
             if self.launcher.user_data is None:
                 self.login_screen.activate()
+
         self.root.bind("<Escape>", lambda x: self.exit())
         self.root.bind('<Shift-Control-Key-R>', lambda x: reset_color())
 
         def on_primary_close():
-            self.root.event_generate("<<RootDestroy>>")
-            self.root.destroy()
+            self.recursive_save()
+            try:
+                self.root.event_generate("<<RootDestroy>>")
+                self.root.destroy()
+            except Exception as e:
+                print("Failed to execute on primary close because:", e)
+                sys.exit()
+
         self.root.protocol("WM_DELETE_WINDOW", on_primary_close)
+
+    def recursive_save(self):
+        if self.launcher.user is None or self.launcher.false_account:
+            return
+        self.launcher.save_file()
+        self.root.after(4000, self.recursive_save)
 
     def launch(self):
         self.root.mainloop()
