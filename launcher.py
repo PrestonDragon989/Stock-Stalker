@@ -35,6 +35,7 @@ class Launcher:
     def save_file(self):
         json_data = self.account_controller.to_jason(self.user)
         file_path = self.file_location
+        print(self.user["color"])
         self.account_controller.account_creator.save_data(file_path, json_data, self.user["file"]["encrypted"])
 
     def start(self):

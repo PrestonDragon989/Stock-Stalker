@@ -42,11 +42,12 @@ class AccountCreator:
             content.encrypted_data = data
         else:
             data = content.raw_data
-            with open(file_path, "a") as file:
+            with open(file_path, "w") as file:
                 file.write(data)
 
     def create_base_account(self, name: str, pref_name: str, password: str, encrypted: bool, js: bool = False) \
             -> dict or str:
+        print(self._base_colors_dict)
         data = {"file": self._base_file_dict, "user": self._base_user_dict,
                 "color": self._base_colors_dict, "stocks": self._base_stocks_dict}
         data["user"]["name"] = name
@@ -77,7 +78,8 @@ class AccountCreator:
                 "foreground": data["color"]["foreground"],
                 "active_ground": data["color"]["active_ground"],
                 "grid_color": data["color"]["grid_color"],
-                "stock_color": data["color"]["stock_color"]
+                "stock_color": data["color"]["stock_color"],
+                "border_color": data["color"]["border_color"]
             },
             "stocks": {
                 "followed": data["stocks"]["followed"],

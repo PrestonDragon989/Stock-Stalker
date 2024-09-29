@@ -254,7 +254,7 @@ class LoginScreen:
             creator = self.controller.account_creator
             data = creator.create_base_account(name_input.get(), preferred_input.get(), password_input.get(),
                                                encryption_selected.get() == "Yes", js=True)
-            creator.save_data(file_path=os.path.abspath(file_name_input.get() + ".json"),
+            creator.save_data(file_path=os.path.abspath("saves/" + file_name_input.get() + ".json"),
                               json_data=data, encrypted=encryption_selected.get() == "Yes")
             self.create_create_section()
 

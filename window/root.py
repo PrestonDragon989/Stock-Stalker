@@ -1,5 +1,4 @@
 import sys
-import json
 
 import window.utils.color as uc
 import window.utils.popup as up

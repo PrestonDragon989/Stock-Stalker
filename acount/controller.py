@@ -27,7 +27,7 @@ class AccountController:
         if file_path is None:
             account_file = filedialog.askopenfilename(defaultextension=".json",
                                                       title="Please Select your STALKER save file",
-                                                      initialdir=os.curdir)
+                                                      initialdir=os.curdir + "/saves")
         else:
             account_file = file_path
 
